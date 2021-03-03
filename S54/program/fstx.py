@@ -1,0 +1,1 @@
+https://cn.investing.com/indices/euro-stoxx-50-(fstx)
