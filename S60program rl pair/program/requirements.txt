@@ -1,0 +1,12 @@
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+tensorflow
+aiohttp
+statsmodels
+PyYAML
+seaborn
+fastcluster
+python_version=='3.6.6'
