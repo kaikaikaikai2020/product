@@ -19,7 +19,7 @@ import numpy as np
 from scipy.signal import argrelextrema
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-
+from various_ma_package import holding, indexer, performance
 
 
 def stochastic(Data, lookback, onwhat, where):
@@ -135,6 +135,28 @@ for ticker in instrument_list:
     my_data = adder(my_data, 20)
     my_data = stochastic(my_data, lookback,3,4)
     my_data = hidden_divergence(my_data, low_barrier, up_barrier,width)
+
+    '''
+    lets try the author's way to caluclate pnl
+    '''
+    my_data = holding(my_data,6,7,9,10)
+    investment = 10000
+    lot = 10000
+    expected_cost = 0.5 * (lot / 10000)  # 0.5 pip spread
+    equity_curve = indexer(my_data, expected_cost, lot, investment,9)
+    plt.plot(equity_curve[:, 3], linewidth=1, label='EURUSD')
+    plt.grid()
+    plt.legend()
+    plt.axhline(y=investment, color='black', linewidth=1)
+    plt.title('Reverse RSI Strategy', fontsize=20)
+    performance(equity_curve,my_data,"EURUSD", expected_cost, lot, investment)
+
+    '''
+    
+    my way to calculate pnl
+    
+    
+    '''
     data = pd.DataFrame(my_data)
     buys = data.loc[(data[6] == 1)]
     sells = data.loc[(data[7]==-1)]
